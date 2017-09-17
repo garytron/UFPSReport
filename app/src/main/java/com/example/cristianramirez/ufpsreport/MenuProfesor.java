@@ -23,8 +23,9 @@ public class MenuProfesor extends AppCompatActivity implements View.OnClickListe
         btnValidar = (Button) findViewById(R.id.btnValidar);
         btnCerrar = (Button) findViewById(R.id.btnCerrar);
         btnEscanear = (Button) findViewById(R.id.btnEscanear);
-
-     ;
+        btnValidar.setOnClickListener(this);
+        btnCerrar.setOnClickListener(this);
+        btnEscanear.setOnClickListener(this);
 
     }
 
@@ -45,7 +46,7 @@ public class MenuProfesor extends AppCompatActivity implements View.OnClickListe
             integrator.initiateScan();
         }
         if(view.getId()==R.id.btnValidar){
-        Intent validar = new Intent(getApplicationContext(),ValidarIncidente.class);
+            Intent validar = new Intent(getApplicationContext(),ValidarIncidente.class);
             startActivity(validar);
         }
     }
