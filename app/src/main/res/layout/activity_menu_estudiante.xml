@@ -69,10 +69,10 @@
             android:layout_weight="0.7">
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btnEscanearAlumno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/button"
+                android:layout_above="@+id/btnlogout"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="12dp"
                 android:backgroundTint="@color/primary"
@@ -80,14 +80,14 @@
                 android:textColor="@color/icons" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btnlogout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/button3"
-                android:layout_alignLeft="@+id/button3"
+                android:layout_alignEnd="@+id/btnEscanearAlumno"
+                android:layout_alignLeft="@+id/btnEscanearAlumno"
                 android:layout_alignParentBottom="true"
-                android:layout_alignRight="@+id/button3"
-                android:layout_alignStart="@+id/button3"
+                android:layout_alignRight="@+id/btnEscanearAlumno"
+                android:layout_alignStart="@+id/btnEscanearAlumno"
                 android:layout_marginBottom="21dp"
                 android:backgroundTint="@color/primary"
                 android:text="Cerrar sesion"

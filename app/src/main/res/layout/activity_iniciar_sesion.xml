@@ -81,7 +81,7 @@
                     android:textColor="@android:color/background_light" />
 
                 <EditText
-                    android:id="@+id/editText7"
+                    android:id="@+id/codigoUFPS"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@android:color/background_light"
@@ -99,7 +99,7 @@
                     android:textColor="@android:color/background_light" />
 
                 <EditText
-                    android:id="@+id/editText8"
+                    android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@android:color/background_light"
@@ -139,7 +139,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/btnlogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
