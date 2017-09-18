@@ -20,7 +20,6 @@
         <activity android:name=".MenuEstudiante" />
         <activity android:name=".MenuProfesor" />
         <activity android:name=".RegistrarIncidente" />
-        <activity android:name=".RegistrarUsuario" />
         <activity android:name=".ValidarIncidente"></activity>
     </application>
 
