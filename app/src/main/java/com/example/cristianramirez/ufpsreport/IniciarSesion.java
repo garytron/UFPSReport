@@ -1,9 +1,12 @@
 package com.example.cristianramirez.ufpsreport;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.JsonReader;
 import android.util.Log;
+import android.util.StringBuilderPrinter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +27,7 @@ public class IniciarSesion extends AppCompatActivity implements View.OnClickList
 
     EditText codigoUFPS, password;
     Button btnlogin;
+    private SharedPreferences session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,32 +48,39 @@ public class IniciarSesion extends AppCompatActivity implements View.OnClickList
         Thread tr = new Thread() {
             @Override
             public void run() {
-                final String resultado = login(codigoUFPS.getText().toString(), password.getText().toString());
 
+                final String resultado = login(codigoUFPS.getText().toString(), password.getText().toString());
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        int r = verificaJSON(resultado);
-                        String codigo = "";
 
-                        if (r > 0) {
-                            Intent i = new Intent(getApplicationContext(), MenuEstudiante.class);
+                        if(!resultado.equals("failed"))
+                        {
+                            String tipo = "Alumno";
+                            //Guardar la sesion del profesor o estudiante.
+                            session = getApplicationContext().getSharedPreferences("Session",0);
+                            SharedPreferences.Editor edit = session.edit();
 
-                            try {
-                                // Recogiendo valores del JSON
-                                JSONArray arr = new JSONArray(resultado);
-                                JSONObject jObj = arr.getJSONObject(0);
-                                codigo = jObj.getString("codigo");
-                                Log.e("CODIGO", codigo);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            //Colocamos los valores en sesión.
+                            edit.putString("codigo",resultado);
+
+                            edit.commit(); //Guardar cambios.
+
+                            switch (tipo){
+                                case "Alumno":
+                                    Intent i = new Intent(getApplicationContext(), MenuEstudiante.class);
+                                    startActivity(i);
+                                    break;
+                                case "Profesor":
+                                    Intent i2 = new Intent(getApplicationContext(),MenuProfesor.class);
+                                    startActivity(i2);
+                                    break;
                             }
-
-                            i.putExtra("matricula", codigo);
-                            startActivity(i);
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Usuario o Contraseña incorrectos", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "Código o contraseña incorrecta.", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -77,48 +88,54 @@ public class IniciarSesion extends AppCompatActivity implements View.OnClickList
         };
 
         tr.start();
+
     }
 
     public String login(String codigo, String password)
     {
-        URL url = null;
-        String linea = "";
-        int respuesta = 0;
+        URL url;
+        String cadena = "";
         StringBuilder result = null;
 
         try
         {
-            url =  new URL("http://gidis.ufps.edu.co:8088/servicios_arch/persona/select?codigo="+codigo+"&password="+password);
+            url =  new URL("http://gidis.ufps.edu.co:8088/servicios_arch/persona/select");
             HttpURLConnection conection = (HttpURLConnection) url.openConnection();
-            respuesta = conection.getResponseCode();
+            //Colocamos a la conexion que sea metodo POST
+            conection.setRequestMethod("POST");
+            // Ponemos los datos
+            String data = "codigo="+codigo+"&password="+password;
+            // Habilitamos la escritura
+            conection.setDoOutput(true);
+            // Escribimos los datos
+            conection.getOutputStream().write(data.getBytes());
+            //Recogemos la respuesta.
+            InputStream responseBody = conection.getInputStream();
+            InputStreamReader responseBodyReader = new InputStreamReader(responseBody, "UTF-8");
+            JsonReader jsonReader = new JsonReader(responseBodyReader);
 
-            result = new StringBuilder();
-            if(respuesta==HttpURLConnection.HTTP_OK)
-            {
-                InputStream in = new BufferedInputStream(conection.getInputStream());
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            jsonReader.beginObject(); // Start processing the JSON object
+            while (jsonReader.hasNext()) { // Loop through all keys
+                String key = jsonReader.nextName(); // Fetch the next key
+                if (key.equals("result")) { // Check if desired key
+                    // Fetch the value as a String
+                    cadena = jsonReader.nextString();
 
-                while((linea = reader.readLine()) != null)
-                    result.append(linea);
+                    // Do something with the value
+                    // ...
+
+                    break; // Break out of the loop
+                }else if (key.equals("codigo"))
+                {
+                    cadena = jsonReader.nextString();
+                }
+                else {
+                    jsonReader.skipValue(); // Skip values of other keys
+                }
             }
 
-        }catch(Exception e){}
-        Log.e("RESULTADO", result.toString());
-        return result.toString();
-    }
+        }catch(Exception e){ }
 
-    public int verificaJSON(String response)
-    {
-        int res = 0;
-
-        try{
-            JSONArray json = new JSONArray(response);
-
-            if(json.length()>0)
-                res = 1;
-
-        }catch (Exception e){}
-
-        return res;
+        return cadena;
     }
 }

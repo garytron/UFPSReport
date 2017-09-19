@@ -3,11 +3,13 @@ package com.example.cristianramirez.ufpsreport;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -15,8 +17,11 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class MenuEstudiante extends AppCompatActivity implements View.OnClickListener{
 
+    TextView codigotxt;
     Button btnEscanear, btnlogout;
     String textoQr;
+    private SharedPreferences pref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +30,13 @@ public class MenuEstudiante extends AppCompatActivity implements View.OnClickLis
 
         btnEscanear = (Button) findViewById(R.id.btnEscanearAlumno);
         btnlogout = (Button) findViewById(R.id.btnlogout);
+        codigotxt = (TextView) findViewById(R.id.textView2);
 
+        //Traemos la sesion del usuario.
+        pref = getSharedPreferences("Session",0);
+
+        //Imprimos el codigo del alumno/profesor.
+        codigotxt.setText("Hola " + pref.getString("codigo",null));
         btnEscanear.setOnClickListener(this);
     }
 
