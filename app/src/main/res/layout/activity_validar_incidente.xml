@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.4"
+            android:layout_weight="0.45"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -37,7 +37,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.2"
+            android:layout_weight="0.15"
             android:orientation="vertical">
 
 
@@ -86,32 +86,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btnAprobar"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/primary"
-                android:text="Aprobar"
-                android:textColor="@color/icons" />
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btnEliminar"
-                android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/btnListar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary"
+                    android:text="Listar reportes"
+                    android:textColor="@color/icons" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/primary"
-                android:text="Eliminar"
-                android:textColor="@color/icons" />
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnAprobar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/primary"
+                    android:text="Aprobar"
+                    android:textColor="@color/icons" />
+
+                <Button
+                    android:id="@+id/btnEliminar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/primary"
+                    android:text="Eliminar"
+                    android:textColor="@color/icons" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
