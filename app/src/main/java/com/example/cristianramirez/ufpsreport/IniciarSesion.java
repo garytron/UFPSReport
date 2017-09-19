@@ -3,6 +3,7 @@ package com.example.cristianramirez.ufpsreport;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,11 +45,13 @@ public class IniciarSesion extends AppCompatActivity implements View.OnClickList
             @Override
             public void run() {
                 final String resultado = login(codigoUFPS.getText().toString(), password.getText().toString());
+
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         int r = verificaJSON(resultado);
-                        String matricula = "";
+                        String codigo = "";
 
                         if (r > 0) {
                             Intent i = new Intent(getApplicationContext(), MenuEstudiante.class);
@@ -57,12 +60,13 @@ public class IniciarSesion extends AppCompatActivity implements View.OnClickList
                                 // Recogiendo valores del JSON
                                 JSONArray arr = new JSONArray(resultado);
                                 JSONObject jObj = arr.getJSONObject(0);
-                                matricula = jObj.getString("codigoUFPS");
+                                codigo = jObj.getString("codigo");
+                                Log.e("CODIGO", codigo);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
-                            i.putExtra("matricula", matricula);
+                            i.putExtra("matricula", codigo);
                             startActivity(i);
                         } else {
                             Toast.makeText(getApplicationContext(), "Usuario o Contraseña incorrectos", Toast.LENGTH_LONG).show();
@@ -75,7 +79,7 @@ public class IniciarSesion extends AppCompatActivity implements View.OnClickList
         tr.start();
     }
 
-    public String login(String usu, String pas)
+    public String login(String codigo, String password)
     {
         URL url = null;
         String linea = "";
@@ -84,7 +88,7 @@ public class IniciarSesion extends AppCompatActivity implements View.OnClickList
 
         try
         {
-            url =  new URL("http://puertasabiertas.azurewebsites.net/apiREST.php?usuario="+usu+"&password="+pas);
+            url =  new URL("http://gidis.ufps.edu.co:8088/servicios_arch/persona/select?codigo="+codigo+"&password="+password);
             HttpURLConnection conection = (HttpURLConnection) url.openConnection();
             respuesta = conection.getResponseCode();
 
@@ -99,7 +103,7 @@ public class IniciarSesion extends AppCompatActivity implements View.OnClickList
             }
 
         }catch(Exception e){}
-
+        Log.e("RESULTADO", result.toString());
         return result.toString();
     }
 
