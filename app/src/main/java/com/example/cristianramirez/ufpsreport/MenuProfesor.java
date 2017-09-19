@@ -2,6 +2,7 @@ package com.example.cristianramirez.ufpsreport;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -33,7 +34,8 @@ public class MenuProfesor extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
 
         if(view.getId()==R.id.btnCerrar){
-
+            Intent validar = new Intent(getApplicationContext(),IniciarSesion.class);
+            startActivity(validar);
         }
         if(view.getId()==R.id.btnEscanear){
             final Activity act = this;
