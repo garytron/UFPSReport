@@ -3,6 +3,7 @@ package com.example.cristianramirez.ufpsreport;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,15 +19,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import Util.Reporte;
 
 public class ValidarIncidente extends AppCompatActivity implements View.OnClickListener {
     CheckBox el1, el2, el3, el4, el5, el6, el7, el8;
-    Button btnEliminar, btnAprobar;
+    Button btnEliminar, btnAprobar,btnListar;
     String resultado = "";
     String accion = "";
+    int mapeo=0;
+
+    List<Reporte> aux;
+    List<Reporte> retorno = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,7 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_validar_incidente);
         btnEliminar = (Button) findViewById(R.id.btnEliminar);
         btnAprobar = (Button) findViewById(R.id.btnAprobar);
+        btnListar = (Button) findViewById(R.id.btnListar);
         el1 = (CheckBox) findViewById(R.id.checkBox1);
         el2 = (CheckBox) findViewById(R.id.checkBox2);
         el3 = (CheckBox) findViewById(R.id.checkBox3);
@@ -45,6 +52,8 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
 
         btnAprobar.setOnClickListener(this);
         btnEliminar.setOnClickListener(this);
+        btnListar.setOnClickListener(this);
+
 
         limpiarC();
 
@@ -53,17 +62,55 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
+
         if (view.getId() == R.id.btnAprobar) {
-            accion = "";
+            if(mapeo>0){
+                if(el1.isChecked()){
+                    retorno.add(aux.get(0));
+                }
+                if(el2.isChecked()){
+                    retorno.add(aux.get(1));
+                }
+                if(el3.isChecked()){
+                    retorno.add(aux.get(2));
+                }
+                if(el4.isChecked()){
+                    retorno.add(aux.get(3));
+                }
+                if(el5.isChecked()){
+                    retorno.add(aux.get(4));
+                }
+                if(el6.isChecked()){
+                    retorno.add(aux.get(5));
+                }
+                if(el7.isChecked()){
+                    retorno.add(aux.get(6));
+                }
+                if(el8.isChecked()){
+                    retorno.add(aux.get(7));
+                }
+                for(int t = 0;t < retorno.size();t++){
+                    accion ="/reporte/updateEstado";
+                    AccesoRemoto a = new AccesoRemoto();
+                    a.execute();
+                }
+                limpiarC();
+                llenarChecs();
+            }else{
+                Log.e("prueba","1");
+                Toast.makeText(getApplicationContext(),"No Hay Reportes Disponibles", Toast.LENGTH_LONG).show();
+            }
+
+
+        }
+        if (view.getId() == R.id.btnEliminar) {
+            accion ="";
             AccesoRemoto a = new AccesoRemoto();
             a.execute();
             limpiarC();
             llenarChecs();
         }
-        if (view.getId() == R.id.btnEliminar) {
-            accion = "";
-            AccesoRemoto a = new AccesoRemoto();
-            a.execute();
+        if (view.getId() == R.id.btnListar) {
             limpiarC();
             llenarChecs();
         }
@@ -75,14 +122,16 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
 
         int con = 0;
         accion = "/reporte/selectAll";
+
         try {
             AccesoRemoto a = new AccesoRemoto();
             a.execute();
 
             Gson miGson = new Gson();
-            List<Reporte> aux = miGson.fromJson(resultado, new TypeToken<List<Reporte>>() {
+            aux= miGson.fromJson(resultado, new TypeToken<List<Reporte>>() {
             }.getType());
             for (Reporte r : aux) {
+                if(r.getEstado().equalsIgnoreCase("validado")){
                 if (con == 0) {
                     el1.setEnabled(true);
                     el1.setText(aux.get(con).toString());
@@ -117,6 +166,8 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
                 }
                 con++;
             }
+            }
+            mapeo=aux.size();
             con = 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -127,13 +178,21 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
 
     public void limpiarC() {
         el1.setEnabled(false);
+        el1.setText("");
         el2.setEnabled(false);
+        el2.setText("");
         el3.setEnabled(false);
+        el3.setText("");
         el4.setEnabled(false);
+        el4.setText("");
         el5.setEnabled(false);
+        el5.setText("");
         el6.setEnabled(false);
+        el6.setText("");
         el7.setEnabled(false);
+        el7.setText("");
         el8.setEnabled(false);
+        el8.setText("");
     }
 
 
@@ -149,8 +208,8 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
 
                 url = new URL("http://gidis.ufps.edu.co:8088/servicios_arch" + accion);
                 HttpURLConnection conection = (HttpURLConnection) url.openConnection();
-                respuesta = conection.getResponseCode();
 
+                respuesta = conection.getResponseCode();
                 result = new StringBuilder();
                 if (respuesta == HttpURLConnection.HTTP_OK) {
                     InputStream in = new BufferedInputStream(conection.getInputStream());
