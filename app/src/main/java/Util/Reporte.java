@@ -76,10 +76,11 @@ public class Reporte {
     public String toString() {
         return
                 "Reporte Nro=" + id_reporte +
-                ", Fecha=" + fecha.getDay()+"-"+fecha.getHours()+":"+fecha.getMinutes() +
-                ", Instrumento='" + instrumento + '\'' +
-                " Nro='" + instrumentoNombre + '\'' +
-                ", tipoDescripcion='" + tipoDescripcion + '\''
+                ", Fecha=" + fecha.getDay()+" de" +
+                        fecha.getMonth()+"  "+fecha.getHours()+":"+fecha.getMinutes() +
+                ", Instrumento='" + instrumento +
+                " Nro='" + instrumentoNombre  +
+                ",tipoDescripcion=" + tipoDescripcion + '\''
                 ;
     }
 }
