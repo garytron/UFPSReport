@@ -38,18 +38,31 @@ public class MenuEstudiante extends AppCompatActivity implements View.OnClickLis
         //Imprimos el codigo del alumno/profesor.
         codigotxt.setText("Hola " + pref.getString("codigo",null));
         btnEscanear.setOnClickListener(this);
+        btnlogout.setOnClickListener(this);
     }
 
     @Override
-    public void onClick(View view) {
-        final Activity act = this;
-        IntentIntegrator integrator = new IntentIntegrator(act);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-        integrator.setPrompt("Escanear código QR de la computadora");
-        integrator.setCameraId(0);
-        integrator.setBeepEnabled(false);
-        integrator.setBarcodeImageEnabled(false);
-        integrator.initiateScan();
+    public void onClick(View v) {
+
+        Intent i;
+        switch (v.getId())
+        {
+            case R.id.btnEscanearAlumno:
+                final Activity act = this;
+                IntentIntegrator integrator = new IntentIntegrator(act);
+                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                integrator.setPrompt("Escanear código QR de la computadora");
+                integrator.setCameraId(0);
+                integrator.setBeepEnabled(false);
+                integrator.setBarcodeImageEnabled(false);
+                integrator.initiateScan();
+            break;
+
+            case R.id.btnlogout:
+                i = new Intent(getApplicationContext(),IniciarSesion.class);
+                startActivity(i);
+                break;
+        }
     }
 
     @Override

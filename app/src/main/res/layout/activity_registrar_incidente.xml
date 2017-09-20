@@ -54,6 +54,8 @@
                     android:layout_height="wrap_content"
                     android:text="Ubicacion del fallo:"
                     android:textColor="@color/primary_text" />
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -61,35 +63,10 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <CheckBox
-                    android:id="@+id/checkBox5"
+                <ImageView
+                    android:id="@+id/imagenQR"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Teclado" />
-
-                <CheckBox
-                    android:id="@+id/checkBox4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Mouse" />
-
-                <CheckBox
-                    android:id="@+id/checkBox3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Pantalla" />
-
-                <CheckBox
-                    android:id="@+id/checkBox2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Torre" />
-
-                <CheckBox
-                    android:id="@+id/checkBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Otro" />
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
 
@@ -102,14 +79,19 @@
             android:layout_weight="0.98"
             android:orientation="vertical"
             android:weightSum="1">
-
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Descripcion del problema:"
+                android:textColor="@color/primary_text" />
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/descripcion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textMultiLine"
-                android:text="Descripcion del problema:"
+                android:hint="Escribe algo..."
                 android:layout_weight="1.09" />
         </LinearLayout>
 
@@ -118,7 +100,7 @@
             android:layout_height="87dp">
 
             <Button
-                android:id="@+id/button7"
+                android:id="@+id/btnRegistrar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"

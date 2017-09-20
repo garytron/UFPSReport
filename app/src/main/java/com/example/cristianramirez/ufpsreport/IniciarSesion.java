@@ -55,7 +55,7 @@ public class IniciarSesion extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void run() {
 
-                        if(!resultado.equals("failed"))
+                        if(!resultado.equals("failed") && !resultado.equals(null))
                         {
                             String tipo = "Alumno";
                             //Guardar la sesion del profesor o estudiante.
