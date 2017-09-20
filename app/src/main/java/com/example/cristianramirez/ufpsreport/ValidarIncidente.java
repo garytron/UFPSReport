@@ -136,7 +136,11 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
                 }
                 limpiarC();
                 llenarChecs();
+            } else {
+                Log.e("prueba", "1");
+                Toast.makeText(getApplicationContext(), "No Hay Reportes Disponibles", Toast.LENGTH_LONG).show();
             }
+        }
             if (view.getId() == R.id.btnListar) {
                 limpiarC();
                 llenarChecs();
@@ -144,7 +148,7 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
 
         }
 
-    }
+
     public void llenarChecs() {
 
         int con = 0;
@@ -158,7 +162,8 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
             aux = miGson.fromJson(resultado, new TypeToken<List<Reporte>>() {
             }.getType());
             for (Reporte r : aux) {
-                if (r.getEstado().equalsIgnoreCase("noValidado")) {
+                if (r.getEstado().toString().equalsIgnoreCase("noValidado")) {
+                    Log.e("a---->",r.getEstado().toString());
                     if (con == 0) {
                         el1.setEnabled(true);
                         el1.setText(aux.get(con).toString());
@@ -207,20 +212,28 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
     public void limpiarC() {
         el1.setEnabled(false);
         el1.setText("");
+        el1.setSelected(false);
         el2.setEnabled(false);
         el2.setText("");
+        el2.setSelected(false);
         el3.setEnabled(false);
         el3.setText("");
+        el3.setSelected(false);
         el4.setEnabled(false);
         el4.setText("");
+        el4.setSelected(false);
         el5.setEnabled(false);
         el5.setText("");
+        el5.setSelected(false);
         el6.setEnabled(false);
         el6.setText("");
+        el6.setSelected(false);
         el7.setEnabled(false);
         el7.setText("");
+        el7.setSelected(false);
         el8.setEnabled(false);
         el8.setText("");
+        el8.setSelected(false);
     }
 
 
@@ -257,7 +270,7 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
             super.onPostExecute(s);
             resultado=s;
 
-           Toast.makeText(getApplicationContext(),"Cargando Datos", Toast.LENGTH_LONG).show();
+
         }
     }
 
