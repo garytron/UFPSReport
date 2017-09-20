@@ -64,60 +64,87 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
 
         if (view.getId() == R.id.btnAprobar) {
-            if(mapeo>0){
-                if(el1.isChecked()){
+            if (mapeo > 0) {
+                if (el1.isChecked()) {
                     retorno.add(aux.get(0));
                 }
-                if(el2.isChecked()){
+                if (el2.isChecked()) {
                     retorno.add(aux.get(1));
                 }
-                if(el3.isChecked()){
+                if (el3.isChecked()) {
                     retorno.add(aux.get(2));
                 }
-                if(el4.isChecked()){
+                if (el4.isChecked()) {
                     retorno.add(aux.get(3));
                 }
-                if(el5.isChecked()){
+                if (el5.isChecked()) {
                     retorno.add(aux.get(4));
                 }
-                if(el6.isChecked()){
+                if (el6.isChecked()) {
                     retorno.add(aux.get(5));
                 }
-                if(el7.isChecked()){
+                if (el7.isChecked()) {
                     retorno.add(aux.get(6));
                 }
-                if(el8.isChecked()){
+                if (el8.isChecked()) {
                     retorno.add(aux.get(7));
                 }
-                for(int t = 0;t < retorno.size();t++){
-                    accion ="/reporte/updateEstado";
+                for (int t = 0; t < retorno.size(); t++) {
+                    accion = "/reporte/updateEstado" + "?id_reporte=" + retorno.get(t).getId_reporte() + "&estado=validado";
                     AccesoRemoto a = new AccesoRemoto();
                     a.execute();
                 }
                 limpiarC();
                 llenarChecs();
-            }else{
-                Log.e("prueba","1");
-                Toast.makeText(getApplicationContext(),"No Hay Reportes Disponibles", Toast.LENGTH_LONG).show();
+            } else {
+                Log.e("prueba", "1");
+                Toast.makeText(getApplicationContext(), "No Hay Reportes Disponibles", Toast.LENGTH_LONG).show();
             }
 
 
         }
         if (view.getId() == R.id.btnEliminar) {
-            accion ="";
-            AccesoRemoto a = new AccesoRemoto();
-            a.execute();
-            limpiarC();
-            llenarChecs();
-        }
-        if (view.getId() == R.id.btnListar) {
-            limpiarC();
-            llenarChecs();
+            if (mapeo > 0) {
+                if (el1.isChecked()) {
+                    retorno.add(aux.get(0));
+                }
+                if (el2.isChecked()) {
+                    retorno.add(aux.get(1));
+                }
+                if (el3.isChecked()) {
+                    retorno.add(aux.get(2));
+                }
+                if (el4.isChecked()) {
+                    retorno.add(aux.get(3));
+                }
+                if (el5.isChecked()) {
+                    retorno.add(aux.get(4));
+                }
+                if (el6.isChecked()) {
+                    retorno.add(aux.get(5));
+                }
+                if (el7.isChecked()) {
+                    retorno.add(aux.get(6));
+                }
+                if (el8.isChecked()) {
+                    retorno.add(aux.get(7));
+                }
+                for (int t = 0; t < retorno.size(); t++) {
+                    accion = "/reporte/delete" + "?id_reporte=" + retorno.get(t).getId_reporte();
+                    AccesoRemoto a = new AccesoRemoto();
+                    a.execute();
+                }
+                limpiarC();
+                llenarChecs();
+            }
+            if (view.getId() == R.id.btnListar) {
+                limpiarC();
+                llenarChecs();
+            }
+
         }
 
     }
-
-
     public void llenarChecs() {
 
         int con = 0;
@@ -128,52 +155,53 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
             a.execute();
 
             Gson miGson = new Gson();
-            aux= miGson.fromJson(resultado, new TypeToken<List<Reporte>>() {
+            aux = miGson.fromJson(resultado, new TypeToken<List<Reporte>>() {
             }.getType());
             for (Reporte r : aux) {
-                if(r.getEstado().equalsIgnoreCase("validado")){
-                if (con == 0) {
-                    el1.setEnabled(true);
-                    el1.setText(aux.get(con).toString());
+                if (r.getEstado().equalsIgnoreCase("noValidado")) {
+                    if (con == 0) {
+                        el1.setEnabled(true);
+                        el1.setText(aux.get(con).toString());
+                    }
+                    if (con == 1) {
+                        el2.setEnabled(true);
+                        el2.setText(aux.get(con).toString());
+                    }
+                    if (con == 2) {
+                        el3.setEnabled(true);
+                        el3.setText(aux.get(con).toString());
+                    }
+                    if (con == 3) {
+                        el4.setEnabled(true);
+                        el4.setText(aux.get(con).toString());
+                    }
+                    if (con == 4) {
+                        el5.setEnabled(true);
+                        el5.setText(aux.get(con).toString());
+                    }
+                    if (con == 5) {
+                        el6.setEnabled(true);
+                        el6.setText(aux.get(con).toString());
+                    }
+                    if (con == 6) {
+                        el7.setEnabled(true);
+                        el7.setText(aux.get(con).toString());
+                    }
+                    if (con == 7) {
+                        el8.setEnabled(true);
+                        el8.setText(aux.get(con).toString());
+                    }
+                    con++;
                 }
-                if (con == 1) {
-                    el2.setEnabled(true);
-                    el2.setText(aux.get(con).toString());
-                }
-                if (con == 2) {
-                    el3.setEnabled(true);
-                    el3.setText(aux.get(con).toString());
-                }
-                if (con == 3) {
-                    el4.setEnabled(true);
-                    el4.setText(aux.get(con).toString());
-                }
-                if (con == 4) {
-                    el5.setEnabled(true);
-                    el5.setText(aux.get(con).toString());
-                }
-                if (con == 5) {
-                    el6.setEnabled(true);
-                    el6.setText(aux.get(con).toString());
-                }
-                if (con == 6) {
-                    el7.setEnabled(true);
-                    el7.setText(aux.get(con).toString());
-                }
-                if (con == 7) {
-                    el8.setEnabled(true);
-                    el8.setText(aux.get(con).toString());
-                }
-                con++;
             }
-            }
-            mapeo=aux.size();
+            mapeo = aux.size();
             con = 0;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
+
 
 
     public void limpiarC() {
