@@ -95,10 +95,11 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
                     a.execute();
                 }
                 limpiarC();
-                llenarChecs();
+
             } else {
                 Log.e("prueba", "1");
-                Toast.makeText(getApplicationContext(), "No Hay Reportes Disponibles", Toast.LENGTH_LONG).show();
+                mapeo=0;
+                Toast.makeText(getApplicationContext(), "REPORTES ACTUALIZADOS CORRECTAMENTE, POR FAVOR REFRESQUE LA LISTA", Toast.LENGTH_LONG).show();
             }
 
 
@@ -134,10 +135,12 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
                     AccesoRemoto a = new AccesoRemoto();
                     a.execute();
                 }
+                Toast.makeText(getApplicationContext(), "REPORTES ELIMINADOS CORRECTAMENTE, POR FAVOR REFRESQUE LA LISTA", Toast.LENGTH_LONG).show();
                 limpiarC();
-                llenarChecs();
+
             } else {
                 Log.e("prueba", "1");
+                mapeo=0;
                 Toast.makeText(getApplicationContext(), "No Hay Reportes Disponibles", Toast.LENGTH_LONG).show();
             }
         }
@@ -198,6 +201,10 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
                     }
                     con++;
                 }
+
+            }
+            if(con==0){
+                Toast.makeText(getApplicationContext(), "No Hay Reportes Disponibles", Toast.LENGTH_LONG).show();
             }
             mapeo = aux.size();
             con = 0;
@@ -212,28 +219,28 @@ public class ValidarIncidente extends AppCompatActivity implements View.OnClickL
     public void limpiarC() {
         el1.setEnabled(false);
         el1.setText("");
-        el1.setSelected(false);
+        el1.setChecked(false);
         el2.setEnabled(false);
         el2.setText("");
-        el2.setSelected(false);
+        el2.setChecked(false);
         el3.setEnabled(false);
         el3.setText("");
-        el3.setSelected(false);
+        el3.setChecked(false);
         el4.setEnabled(false);
         el4.setText("");
-        el4.setSelected(false);
+        el4.setChecked(false);
         el5.setEnabled(false);
         el5.setText("");
-        el5.setSelected(false);
+        el5.setChecked(false);
         el6.setEnabled(false);
         el6.setText("");
-        el6.setSelected(false);
+        el6.setChecked(false);
         el7.setEnabled(false);
         el7.setText("");
-        el7.setSelected(false);
+        el7.setChecked(false);
         el8.setEnabled(false);
         el8.setText("");
-        el8.setSelected(false);
+        el8.setChecked(false);
     }
 
 
